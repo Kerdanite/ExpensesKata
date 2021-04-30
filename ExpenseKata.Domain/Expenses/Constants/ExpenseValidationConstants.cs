@@ -5,5 +5,7 @@
         public const string ExpenseShouldHaveCommentMessage = "Le commentaire est obligatoire";
 
         public const string ExpenseCannotBeInFuture = "Une dépense ne peut pas avoir une date dans le futur";
+
+        public const string ExpenseCannotBeOlderThanThreeMonth = "Une dépense ne peut pas être datée de plus de 3 mois";
     }
 }

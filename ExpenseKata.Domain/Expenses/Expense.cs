@@ -16,6 +16,7 @@ namespace ExpenseKata.Domain.Expenses
         {
             CheckRule(new ExpenseShouldHaveCommentRule(comment));
             CheckRule(new ExpenseCannotBeInFutureRule(dateTimeProvider, expenseDate));
+            CheckRule(new ExpenseCannotBeOlderThanThreeMonth(dateTimeProvider, expenseDate));
 
             return null;
         }

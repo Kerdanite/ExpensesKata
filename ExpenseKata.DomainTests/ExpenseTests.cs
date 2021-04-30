@@ -43,6 +43,34 @@ namespace ExpenseKata.DomainTests
             Assert.Null(exception);
         }
 
+        [Fact]
+        public void CreateExpense_ExpenseOlderThan3Month_ShouldThrowException()
+        {
+            DateTime expenseDate = new DateTime(2021, 1, 25);
+            var provider = new DateTimeProviderStub(new DateTime(2021, 5, 1));
+
+            var builder = new EpenseBuilder();
+            builder.WithExpenseDate(expenseDate);
+            builder.WithDateTimeProvider(provider);
+
+            var exception = Assert.Throws<BusinessRuleValidationException>(() => builder.Build());
+            Assert.Equal(ExpenseValidationConstants.ExpenseCannotBeOlderThanThreeMonth, exception.Message);
+        }
+
+        [Fact]
+        public void CreateExpense_ExpenseWithDateWith3Month_ShouldNotThrowException()
+        {
+            DateTime expenseDate = new DateTime(2021, 1, 1);
+            var provider = new DateTimeProviderStub(new DateTime(2021, 4, 30));
+
+            var builder = new EpenseBuilder();
+            builder.WithExpenseDate(expenseDate);
+            builder.WithDateTimeProvider(provider);
+
+            var exception = Record.Exception(() => builder.Build());
+            Assert.Null(exception);
+        }
+
     }
 
     public class DateTimeProviderStub : IDateTimeProvider
