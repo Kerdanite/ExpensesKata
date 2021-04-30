@@ -15,11 +15,11 @@ namespace ExpenseKata.Domain.Expenses.Rules
             _expenseDate = expenseDate;
         }
 
-        public bool IsBroken() => IsDifferentDate(_provider.Now, _expenseDate);
+        public bool IsBroken() => IsExpenseInFuture(_provider.Now, _expenseDate);
 
-        private bool IsDifferentDate(DateTime providerNow, DateTime expenseDate)
+        private bool IsExpenseInFuture(DateTime date1, DateTime date2)
         {
-            return true;
+            return date1 < date2;
         }
 
         public string Message => ExpenseValidationConstants.ExpenseCannotBeInFuture;

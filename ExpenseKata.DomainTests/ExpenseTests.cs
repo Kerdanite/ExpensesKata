@@ -26,6 +26,18 @@ namespace ExpenseKata.DomainTests
             Assert.Equal(ExpenseValidationConstants.ExpenseCannotBeInFuture, exception.Message);
         }
 
+        [Fact]
+        public void CreateExpense_PastExpense_ShoudNotThrowException()
+        {
+            string comment = "Default";
+            DateTime expenseDate = new DateTime(2021, 4, 25);
+            var provider = new DateTimeProviderStub(new DateTime(2021, 5, 1));
+
+
+            var exception = Record.Exception(() => Expense.Create(provider, comment, expenseDate));
+            Assert.Null(exception);
+        }
+
     }
 
     public class DateTimeProviderStub : IDateTimeProvider
