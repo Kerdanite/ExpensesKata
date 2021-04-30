@@ -9,6 +9,7 @@ namespace ExpenseKata.Domain.Common
 
         protected AggregateRoot()
         {
+            Id = Guid.NewGuid();
         }
 
         protected static void CheckRule(IBusinessRule rule)

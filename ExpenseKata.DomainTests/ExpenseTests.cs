@@ -100,6 +100,16 @@ namespace ExpenseKata.DomainTests
             Assert.Equal(ExpenseValidationConstants.ExpenseShouldBeUniqueOnDateAndAmountPerUser, exception.Message);
         }
 
+        [Fact]
+        public void CreateExpense_ShouldReturnCreatedUser()
+        {
+            var builder = new EpenseBuilder();
+
+            var expense = builder.Build();
+            Assert.NotNull(expense);
+            Assert.NotEqual(Guid.Empty, expense.Id);
+        }
+
     }
 
     public class DateTimeProviderStub : IDateTimeProvider
@@ -122,6 +132,7 @@ namespace ExpenseKata.DomainTests
         private ExpenseUser _user;
         private Currency _currency;
         private decimal _amount;
+        private ExpenseNature _nature;
 
         public EpenseBuilder()
         {
@@ -136,11 +147,12 @@ namespace ExpenseKata.DomainTests
             _currency = Currency.Dollar;
             _user = new ExpenseUser(Guid.NewGuid(), Currency.Dollar, new List<UserExpenseHistory>());
             _amount = 15;
+            _nature = ExpenseNature.Hotel;
         }
 
         public Expense Build()
         {
-            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency, _amount);
+            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency, _amount, _nature);
         }
 
         public void WithComment(string comment)
