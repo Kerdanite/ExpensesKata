@@ -12,11 +12,12 @@ namespace ExpenseKata.Domain.Expenses
         {
         }
 
-        public static Expense Create(IDateTimeProvider dateTimeProvider, string comment, DateTime expenseDate)
+        public static Expense Create(IDateTimeProvider dateTimeProvider, string comment, DateTime expenseDate, ExpenseUser user, Currency currency)
         {
             CheckRule(new ExpenseShouldHaveCommentRule(comment));
             CheckRule(new ExpenseCannotBeInFutureRule(dateTimeProvider, expenseDate));
             CheckRule(new ExpenseCannotBeOlderThanThreeMonth(dateTimeProvider, expenseDate));
+            CheckRule(new ExpenseShouldHaveSameCurrencyThanUser(user, currency));
 
             return null;
         }

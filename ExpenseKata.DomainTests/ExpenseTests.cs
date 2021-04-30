@@ -71,6 +71,17 @@ namespace ExpenseKata.DomainTests
             Assert.Null(exception);
         }
 
+        [Fact]
+        public void CreateExpense_ExpenseWithDifferentCurrencyFromUser_ShouldThrowException()
+        {
+            var builder = new EpenseBuilder();
+            builder.WithUser(new ExpenseUser(Guid.NewGuid(), Currency.Dollar));
+            builder.WithCurrency(Currency.Euro);
+
+            var exception = Assert.Throws<BusinessRuleValidationException>(() => builder.Build());
+            Assert.Equal(ExpenseValidationConstants.ExpenseShouldHaveSameCurrencyThanUser, exception.Message);
+        }
+
     }
 
     public class DateTimeProviderStub : IDateTimeProvider
@@ -90,6 +101,8 @@ namespace ExpenseKata.DomainTests
         private string _comment;
         private IDateTimeProvider _dateTimeProvider;
         private DateTime _expenseDate;
+        private ExpenseUser _user;
+        private Currency _currency;
 
         public EpenseBuilder()
         {
@@ -101,11 +114,13 @@ namespace ExpenseKata.DomainTests
             _comment = "default";
             _dateTimeProvider = new DateTimeProviderStub(new DateTime(2021, 5, 1));
             _expenseDate = new DateTime(2021, 4, 1);
+            _currency = Currency.Dollar;
+            _user = new ExpenseUser(Guid.NewGuid(), Currency.Dollar);
         }
 
         public Expense Build()
         {
-            return Expense.Create(_dateTimeProvider, _comment, _expenseDate);
+            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency);
         }
 
         public void WithComment(string comment)
@@ -121,6 +136,16 @@ namespace ExpenseKata.DomainTests
         public void WithDateTimeProvider(IDateTimeProvider provider)
         {
             _dateTimeProvider = provider;
+        }
+
+        public void WithCurrency(Currency currency)
+        {
+            _currency = currency;
+        }
+
+        public void WithUser(ExpenseUser user)
+        {
+            _user = user;
         }
     }
 }
