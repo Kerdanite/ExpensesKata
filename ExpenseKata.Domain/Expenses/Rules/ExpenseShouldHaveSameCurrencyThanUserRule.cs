@@ -3,12 +3,12 @@ using ExpenseKata.Domain.Expenses.Constants;
 
 namespace ExpenseKata.Domain.Expenses.Rules
 {
-    public class ExpenseShouldHaveSameCurrencyThanUser : IBusinessRule
+    public class ExpenseShouldHaveSameCurrencyThanUserRule : IBusinessRule
     {
         private readonly ExpenseUser _user;
         private readonly Currency _currency;
 
-        public ExpenseShouldHaveSameCurrencyThanUser(ExpenseUser user, Currency currency)
+        public ExpenseShouldHaveSameCurrencyThanUserRule(ExpenseUser user, Currency currency)
         {
             _user = user;
             _currency = currency;

@@ -4,12 +4,12 @@ using ExpenseKata.Domain.Expenses.Constants;
 
 namespace ExpenseKata.Domain.Expenses.Rules
 {
-    public class ExpenseCannotBeOlderThanThreeMonth : IBusinessRule
+    public class ExpenseCannotBeOlderThanThreeMonthRule : IBusinessRule
     {
         private readonly IDateTimeProvider _provider;
         private readonly DateTime _expenseDate;
 
-        public ExpenseCannotBeOlderThanThreeMonth(IDateTimeProvider provider, DateTime expenseDate)
+        public ExpenseCannotBeOlderThanThreeMonthRule(IDateTimeProvider provider, DateTime expenseDate)
         {
             _provider = provider;
             _expenseDate = expenseDate;

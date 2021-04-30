@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ExpenseKata.Domain.Common;
 using ExpenseKata.Domain.Expenses;
 using ExpenseKata.Domain.Expenses.Constants;
@@ -75,11 +76,28 @@ namespace ExpenseKata.DomainTests
         public void CreateExpense_ExpenseWithDifferentCurrencyFromUser_ShouldThrowException()
         {
             var builder = new EpenseBuilder();
-            builder.WithUser(new ExpenseUser(Guid.NewGuid(), Currency.Dollar));
+            builder.WithUser(new ExpenseUser(Guid.NewGuid(), Currency.Dollar, new List<UserExpenseHistory>()));
             builder.WithCurrency(Currency.Euro);
 
             var exception = Assert.Throws<BusinessRuleValidationException>(() => builder.Build());
             Assert.Equal(ExpenseValidationConstants.ExpenseShouldHaveSameCurrencyThanUser, exception.Message);
+        }
+
+        [Fact]
+        public void CreateExpense_UserWithSameExpenseTwice_ShouldThrowException()
+        {
+            var builder = new EpenseBuilder();
+            var expenseDate = new DateTime(2021, 5, 1);
+            decimal amount = 30;
+            builder.WithUser(new ExpenseUser(Guid.NewGuid(), Currency.Dollar, new List<UserExpenseHistory>
+            {
+                new UserExpenseHistory(expenseDate, new ExpenseAmount(amount, Currency.Dollar))
+            }));
+            builder.WithExpenseDate(expenseDate);
+            builder.WithAmount(amount);
+
+            var exception = Assert.Throws<BusinessRuleValidationException>(() => builder.Build());
+            Assert.Equal(ExpenseValidationConstants.ExpenseShouldBeUniqueOnDateAndAmountPerUser, exception.Message);
         }
 
     }
@@ -103,6 +121,7 @@ namespace ExpenseKata.DomainTests
         private DateTime _expenseDate;
         private ExpenseUser _user;
         private Currency _currency;
+        private decimal _amount;
 
         public EpenseBuilder()
         {
@@ -115,12 +134,13 @@ namespace ExpenseKata.DomainTests
             _dateTimeProvider = new DateTimeProviderStub(new DateTime(2021, 5, 1));
             _expenseDate = new DateTime(2021, 4, 1);
             _currency = Currency.Dollar;
-            _user = new ExpenseUser(Guid.NewGuid(), Currency.Dollar);
+            _user = new ExpenseUser(Guid.NewGuid(), Currency.Dollar, new List<UserExpenseHistory>());
+            _amount = 15;
         }
 
         public Expense Build()
         {
-            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency);
+            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency, _amount);
         }
 
         public void WithComment(string comment)
@@ -146,6 +166,11 @@ namespace ExpenseKata.DomainTests
         public void WithUser(ExpenseUser user)
         {
             _user = user;
+        }
+
+        public void WithAmount(decimal amount)
+        {
+            _amount = amount;
         }
     }
 }
