@@ -1,4 +1,5 @@
-﻿using ExpenseKata.Domain.Common;
+﻿using System;
+using ExpenseKata.Domain.Common;
 using ExpenseKata.Domain.Expenses.Rules;
 
 namespace ExpenseKata.Domain.Expenses
@@ -11,9 +12,11 @@ namespace ExpenseKata.Domain.Expenses
         {
         }
 
-        public static Expense Create(string comment)
+        public static Expense Create(IDateTimeProvider dateTimeProvider, string comment, DateTime expenseDate)
         {
             CheckRule(new ExpenseShouldHaveCommentRule(comment));
+            CheckRule(new ExpenseCannotBeInFutureRule(dateTimeProvider, expenseDate));
+
             return null;
         }
     }
