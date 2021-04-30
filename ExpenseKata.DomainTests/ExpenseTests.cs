@@ -1,5 +1,6 @@
 ﻿using ExpenseKata.Domain.Common;
 using ExpenseKata.Domain.Expenses;
+using ExpenseKata.Domain.Expenses.Constants;
 using Xunit;
 
 namespace ExpenseKata.Domain.Tests
@@ -9,8 +10,8 @@ namespace ExpenseKata.Domain.Tests
         [Fact]
         public void CreateExpense_EmptyCommentaryShoudThrowException()
         {
-            var exception = Assert.Throws<BusinessRuleValidationException>(() => Expense.Create(""));
-            Assert.Equal("Le commentaire est obligatoire", exception.Message);
+            var exception = Assert.Throws<BusinessRuleValidationException>(() => Expense.Create(string.Empty));
+            Assert.Equal(ExpenseValidationConstants.ExpenseShouldHaveCommentMessage, exception.Message);
         }
     }
 }

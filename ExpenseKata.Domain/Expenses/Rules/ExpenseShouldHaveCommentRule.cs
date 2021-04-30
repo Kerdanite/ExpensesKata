@@ -1,4 +1,5 @@
 ﻿using ExpenseKata.Domain.Common;
+using ExpenseKata.Domain.Expenses.Constants;
 
 namespace ExpenseKata.Domain.Expenses.Rules
 {
@@ -13,6 +14,6 @@ namespace ExpenseKata.Domain.Expenses.Rules
 
         public bool IsBroken() => string.IsNullOrEmpty(_comment);
 
-        public string Message => "Le commentaire est obligatoire";
+        public string Message => ExpenseValidationConstants.ExpenseShouldHaveCommentMessage;
     }
 }
