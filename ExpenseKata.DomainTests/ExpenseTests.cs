@@ -110,6 +110,47 @@ namespace ExpenseKata.DomainTests
             Assert.NotEqual(Guid.Empty, expense.Id);
         }
 
+        [Fact]
+        public void CreateExpense_VerifyMemento()
+        {
+            var expenseDate = new DateTime(2021, 04, 01);
+            decimal amount = 22;
+            var comment = "TestComment";
+            var currency = Currency.Dollar;
+            var builder = new EpenseBuilder();
+            var userId = Guid.NewGuid();
+            var nature = ExpenseNature.Restaurant;
+
+            builder.WithExpenseDate(expenseDate);
+            builder.WithAmount(amount);
+            builder.WithComment(comment);
+            builder.WithCurrency(currency);
+            builder.WithUser(new ExpenseUser(userId, currency, new List<UserExpenseHistory>()));
+            builder.WithNature(nature);
+
+            var expense = builder.Build();
+            var memento = expense.ToMemento();
+
+            Assert.Equal(expenseDate, memento.ExpenseDate);
+            Assert.Equal(amount, memento.Amount);
+            Assert.Equal(comment, memento.Comment);
+            Assert.Equal(currency, memento.Currency);
+            Assert.Equal(userId, memento.UserId);
+            Assert.Equal(nature, memento.Nature);
+        }
+
+
+        [Fact]
+        public void CreateExpense_VerifyToMemento()
+        {
+            var builder = new EpenseBuilder();
+            var expense = builder.Build();
+            var memento = expense.ToMemento();
+
+            var fromMemento = Expense.FromMemento(memento);
+
+            Assert.Equal(expense, fromMemento);
+        }
     }
 
     public class DateTimeProviderStub : IDateTimeProvider
@@ -183,6 +224,11 @@ namespace ExpenseKata.DomainTests
         public void WithAmount(decimal amount)
         {
             _amount = amount;
+        }
+
+        public void WithNature(ExpenseNature nature)
+        {
+            _nature = nature;
         }
     }
 }

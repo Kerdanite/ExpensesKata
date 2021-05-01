@@ -4,7 +4,7 @@ using ExpenseKata.Domain.Expenses.Rules;
 
 namespace ExpenseKata.Domain.Expenses
 {
-    public class Expense : AggregateRoot
+    public class Expense : AggregateRoot, IEquatable<Expense>
     {
         private readonly ExpenseAmount _expenseAmount;
         private readonly DateTime _expenseDate;
@@ -51,6 +51,44 @@ namespace ExpenseKata.Domain.Expenses
         public static Expense FromMemento(ExpenseMemento memento)
         {
             return new Expense(new ExpenseAmount(memento.Amount, memento.Currency), memento.ExpenseDate, memento.UserId, memento.Nature, memento.Comment);
+        }
+
+        public bool Equals(Expense other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(_expenseAmount, other._expenseAmount) && _expenseDate.Equals(other._expenseDate) && _userId.Equals(other._userId) && _nature == other._nature && _comment == other._comment;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Expense) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (_expenseAmount != null ? _expenseAmount.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ _expenseDate.GetHashCode();
+                hashCode = (hashCode * 397) ^ _userId.GetHashCode();
+                hashCode = (hashCode * 397) ^ (int) _nature;
+                hashCode = (hashCode * 397) ^ (_comment != null ? _comment.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
+
+        public static bool operator ==(Expense left, Expense right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(Expense left, Expense right)
+        {
+            return !Equals(left, right);
         }
     }
 
