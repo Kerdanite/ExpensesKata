@@ -7,6 +7,10 @@ namespace ExpenseKata.Domain.Expenses
         private readonly DateTime _expenseDate;
         private readonly ExpenseAmount _amount;
 
+        private UserExpenseHistory()
+        {
+        }
+
         public UserExpenseHistory(DateTime expenseDate, ExpenseAmount amount)
         {
             _expenseDate = expenseDate;

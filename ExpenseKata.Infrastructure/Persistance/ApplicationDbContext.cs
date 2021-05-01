@@ -1,4 +1,5 @@
 ﻿using ExpenseKata.Domain.Expenses;
+using ExpenseKata.Domain.Users;
 using ExpenseKata.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ namespace ExpenseKata.Infrastructure.Persistance
         }
 
         public DbSet<Expense> Expenses { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

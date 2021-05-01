@@ -9,6 +9,9 @@ namespace ExpenseKata.Domain.Expenses
         private readonly Currency _currency;
         private readonly IEnumerable<UserExpenseHistory> _histories;
 
+        private ExpenseUser()
+        {
+        }
         public ExpenseUser(Guid userId, Currency currency, IEnumerable<UserExpenseHistory> histories)
         {
             _userId = userId;

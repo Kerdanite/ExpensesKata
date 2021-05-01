@@ -17,7 +17,7 @@ namespace ExpenseKata.Infrastructure.Expenses
             builder.Property<string>("_comment").HasColumnName("Comment");
             builder.Property<Currency>("_currency").HasColumnName("Currency")
                 .HasConversion(v => v.ToString(), v => (Currency) Enum.Parse(typeof(Currency), v));
-            builder.Property<ExpenseNature>("_currency").HasColumnName("ExpenseNature")
+            builder.Property<ExpenseNature>("_nature").HasColumnName("ExpenseNature")
                 .HasConversion(v => v.ToString(), v => (ExpenseNature) Enum.Parse(typeof(ExpenseNature), v));
 
             builder.OwnsOne<ExpenseAmount>("_expenseAmount", "_expenseAmount", b =>
@@ -28,6 +28,7 @@ namespace ExpenseKata.Infrastructure.Expenses
             builder.OwnsOne<ExpenseUser>("_user", "_user", b =>
             {
                 b.Property<Guid>("_userId").HasColumnName("UserId");
+                b.Ignore(p => p.Histories);
             });
 
         }
