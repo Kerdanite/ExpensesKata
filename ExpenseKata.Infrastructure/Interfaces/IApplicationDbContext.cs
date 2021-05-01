@@ -6,7 +6,7 @@ namespace ExpenseKata.Infrastructure.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<Expense> Expenses { get; set; }
+        DbSet<ExpenseMemento> Expenses { get; set; }
         DbSet<User> Users { get; set; }
     }
 }

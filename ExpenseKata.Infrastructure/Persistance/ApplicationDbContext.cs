@@ -13,7 +13,7 @@ namespace ExpenseKata.Infrastructure.Persistance
             Database.EnsureCreated();
         }
 
-        public DbSet<Expense> Expenses { get; set; }
+        public DbSet<ExpenseMemento> Expenses { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

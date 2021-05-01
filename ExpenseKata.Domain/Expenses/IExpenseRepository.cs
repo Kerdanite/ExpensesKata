@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ExpenseKata.Domain.Expenses
@@ -8,5 +9,7 @@ namespace ExpenseKata.Domain.Expenses
         Task AddAsync(Expense expense);
 
         Task<Expense> GetByIdAsync(Guid id);
+
+        Task<IEnumerable<UserExpenseHistory>> GetExpenseHistoryForUser(Guid requestUserId);
     }
 }

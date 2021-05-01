@@ -17,6 +17,7 @@ namespace ExpenseKata.Domain.Expenses
         }
 
         public decimal Amount => _amount;
+        public Currency Currency => _currency;
 
         public bool Equals(ExpenseAmount other)
         {

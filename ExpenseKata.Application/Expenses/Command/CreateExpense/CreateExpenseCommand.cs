@@ -42,10 +42,12 @@ namespace ExpenseKata.Application.Expenses.Command.CreateExpense
         public async Task<Unit> Handle(CreateExpenseCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByIdAsync(request.UserId);
+            IEnumerable<UserExpenseHistory> history = await _expenseRepository.GetExpenseHistoryForUser(request.UserId);
+
             var expense = Expense.Create(_dateProvider, 
                         request.Comment, 
                         request.ExpenseDate, 
-                        new ExpenseUser(user.Id, user.Currency, new List<UserExpenseHistory>()), 
+                        new ExpenseUser(user.Id, user.Currency, history), 
                         Currency.Dollar, 
                         request.Amount,
                         ExpenseNature.Hotel);

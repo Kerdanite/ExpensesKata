@@ -20,7 +20,7 @@ namespace ExpenseKata.Api.Controllers
         [HttpPut]
         public async Task<ActionResult> CreateExpense(CreateExpenseModel model)
         {
-            //var anthonySparkUser = Guid.Parse("124356D7-FC20-4DCA-AF5E-948A45BFD0E1");
+            //var anthonySparkUser = Guid.Parse("e4193184-c35c-4dec-9748-7407d788dc52");
             await _mediator.Send(new CreateExpenseCommand()
             {
                 Currency = model.Currency,
