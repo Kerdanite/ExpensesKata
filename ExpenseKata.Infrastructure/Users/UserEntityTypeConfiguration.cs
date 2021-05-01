@@ -21,8 +21,8 @@ namespace ExpenseKata.Infrastructure.Users
 
 
             builder.HasData(
-                new {Id = Guid.NewGuid(), FirstName = "Anthony", LastName = "Stark", Currency = Currency.Dollar},
-                new {Id = Guid.NewGuid(), FirstName = "Natasha", LastName = "Romanova", Currency = Currency.RoubleRusse}
+                new {Id = Guid.Parse("124356D7-FC20-4DCA-AF5E-948A45BFD0E1"), FirstName = "Anthony", LastName = "Stark", Currency = Currency.Dollar},
+                new {Id = Guid.Parse("8CAF7E4C-44AE-4FE6-878F-DFD2C3BF4DF3"), FirstName = "Natasha", LastName = "Romanova", Currency = Currency.RoubleRusse}
                 );
         }
     }
