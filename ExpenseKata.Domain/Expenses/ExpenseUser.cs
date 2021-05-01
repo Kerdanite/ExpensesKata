@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ExpenseKata.Domain.Expenses
 {
-    public struct ExpenseUser
+    public class ExpenseUser
     {
         private readonly Guid _userId;
         private readonly Currency _currency;

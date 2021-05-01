@@ -10,7 +10,6 @@ namespace ExpenseKata.Domain.Expenses
         private readonly DateTime _expenseDate;
         private readonly ExpenseUser _user;
         private readonly Currency _currency;
-        private readonly decimal _amount;
         private readonly ExpenseNature _nature;
         private readonly string _comment;
 
@@ -18,13 +17,12 @@ namespace ExpenseKata.Domain.Expenses
         {
         }
 
-        private Expense(ExpenseAmount expenseAmount, DateTime expenseDate, ExpenseUser user, Currency currency, decimal amount, ExpenseNature nature, string comment)
+        private Expense(ExpenseAmount expenseAmount, DateTime expenseDate, ExpenseUser user, Currency currency, ExpenseNature nature, string comment)
         {
             _expenseAmount = expenseAmount;
             _expenseDate = expenseDate;
             _user = user;
             _currency = currency;
-            _amount = amount;
             _nature = nature;
             _comment = comment;
         }
@@ -39,7 +37,7 @@ namespace ExpenseKata.Domain.Expenses
             ExpenseAmount expenseAmount = new ExpenseAmount(amount, currency);
             CheckRule(new ExpenseShouldBeUniqueOnDateAndAmountPerUserRule(user, expenseDate, expenseAmount));
 
-            return new Expense(expenseAmount, expenseDate, user, currency, amount, nature, comment);
+            return new Expense(expenseAmount, expenseDate, user, currency, nature, comment);
         }
     }
 }

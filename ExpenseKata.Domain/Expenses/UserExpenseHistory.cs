@@ -2,7 +2,7 @@
 
 namespace ExpenseKata.Domain.Expenses
 {
-    public struct UserExpenseHistory
+    public class UserExpenseHistory
     {
         private readonly DateTime _expenseDate;
         private readonly ExpenseAmount _amount;
