@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using ExpenseKata.Application.Expenses.Command.CreateExpense;
+using ExpenseKata.Application.Expenses.Query;
 using MediatR;
 
 namespace ExpenseKata.Api.Controllers
@@ -18,35 +21,18 @@ namespace ExpenseKata.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> CreateExpense(CreateExpenseModel model)
+        public async Task<ActionResult> CreateExpense(CreateExpenseCommand command)
         {
-            //var anthonySparkUser = Guid.Parse("e4193184-c35c-4dec-9748-7407d788dc52");
-            await _mediator.Send(new CreateExpenseCommand()
-            {
-                Currency = model.Currency,
-                Amount = model.Amount,
-                Comment = model.Comment,
-                ExpenseDate = model.ExpenseDate,
-                UserId = model.UserId,
-                ExpenseNature = model.ExpenseNature
-            });
+            await _mediator.Send(command);
 
             return Accepted();
         }
-    }
 
-    public class CreateExpenseModel
-    {
-        public Guid UserId { get; set; }
-
-        public decimal Amount { get; set; }
-
-        public string Currency { get; set; }
-
-        public string Comment { get; set; }
-
-        public DateTime ExpenseDate { get;set; }
-
-        public string ExpenseNature { get; set; }
+        [HttpGet("expenseForUser/{userId}")]
+        [ProducesResponseType(typeof(ExpenseDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Get(Guid userId)
+        {
+            return Ok(await _mediator.Send(new GetExpensePerUserQuery{ UserId = userId}));
+        }
     }
 }
