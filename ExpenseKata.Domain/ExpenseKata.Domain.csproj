@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Expenses\Constants\" />
-    <Folder Include="Users\" />
   </ItemGroup>
 
 </Project>

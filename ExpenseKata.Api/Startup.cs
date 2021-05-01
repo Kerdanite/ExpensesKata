@@ -41,6 +41,7 @@ namespace ExpenseKata.Api
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
+
             app.UseRouting();
 
             app.UseAuthorization();

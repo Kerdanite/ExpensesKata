@@ -4,6 +4,7 @@
     {
         Dollar,
         Euro,
-        Yen
+        Yen,
+        RoubleRusse
     }
 }

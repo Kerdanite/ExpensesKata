@@ -25,7 +25,7 @@ namespace ExpenseKata.Infrastructure.Expenses
                 b.Property(p => p.Amount).HasColumnName("Amount");
             });
 
-            builder.OwnsOne<ExpenseUser>("_expenseAmount", "_expenseAmount", b =>
+            builder.OwnsOne<ExpenseUser>("_user", "_user", b =>
             {
                 b.Property<Guid>("_userId").HasColumnName("UserId");
             });

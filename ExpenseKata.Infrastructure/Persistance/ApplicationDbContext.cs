@@ -9,11 +9,14 @@ namespace ExpenseKata.Infrastructure.Persistance
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public DbSet<Expense> Expenses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-            => modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
+        }
     }
 }
