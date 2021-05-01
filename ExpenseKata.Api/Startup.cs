@@ -1,4 +1,7 @@
+using System.Reflection;
+using ExpenseKata.Application.Expenses.Command.CreateExpense;
 using ExpenseKata.Infrastructure;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +37,7 @@ namespace ExpenseKata.Api
                 });
             });
 
+            services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(CreateExpenseCommand).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
