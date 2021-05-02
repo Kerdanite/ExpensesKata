@@ -9,11 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseKata.Domain", "Expen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseKata.Infrastructure", "ExpenseKata.Infrastructure\ExpenseKata.Infrastructure.csproj", "{86FBA1EE-64C0-4AE2-B719-B5FC75E85CC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseKata.DomainTests", "ExpenseKata.DomainTests\ExpenseKata.DomainTests.csproj", "{65FED10A-61C4-41C8-9310-9F7F75D0BCE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseKata.DomainTests", "ExpenseKata.DomainTests\ExpenseKata.DomainTests.csproj", "{65FED10A-61C4-41C8-9310-9F7F75D0BCE3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B9E5A4FB-302F-43BF-B43D-B48C72CE8183}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseKata.Api", "ExpenseKata.Api\ExpenseKata.Api.csproj", "{40325550-2503-4E97-9BAD-F4D6F25DBE41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseKata.Api", "ExpenseKata.Api\ExpenseKata.Api.csproj", "{40325550-2503-4E97-9BAD-F4D6F25DBE41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseKata.ApplicationTests", "ExpenseKata.ApplicationTests\ExpenseKata.ApplicationTests.csproj", "{D28684C7-5798-4660-B5BA-703B3E86718C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,12 +43,17 @@ Global
 		{40325550-2503-4E97-9BAD-F4D6F25DBE41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40325550-2503-4E97-9BAD-F4D6F25DBE41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40325550-2503-4E97-9BAD-F4D6F25DBE41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D28684C7-5798-4660-B5BA-703B3E86718C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D28684C7-5798-4660-B5BA-703B3E86718C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D28684C7-5798-4660-B5BA-703B3E86718C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D28684C7-5798-4660-B5BA-703B3E86718C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{65FED10A-61C4-41C8-9310-9F7F75D0BCE3} = {B9E5A4FB-302F-43BF-B43D-B48C72CE8183}
+		{D28684C7-5798-4660-B5BA-703B3E86718C} = {B9E5A4FB-302F-43BF-B43D-B48C72CE8183}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {469A5DF0-6F17-42AF-B601-D60E33BDB499}
