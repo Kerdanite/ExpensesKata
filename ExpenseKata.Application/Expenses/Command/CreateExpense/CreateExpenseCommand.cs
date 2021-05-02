@@ -48,7 +48,7 @@ namespace ExpenseKata.Application.Expenses.Command.CreateExpense
                         request.Comment, 
                         request.ExpenseDate, 
                         new ExpenseUser(user.Id, user.Currency, history), 
-                        Currency.Dollar, 
+                        request.Currency, 
                         request.Amount,
                         ExpenseNature.Hotel);
 

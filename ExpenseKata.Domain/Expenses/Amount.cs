@@ -5,19 +5,19 @@ namespace ExpenseKata.Domain.Expenses
     public class ExpenseAmount : IEquatable<ExpenseAmount>
     {
         private readonly decimal _amount;
-        private readonly Currency _currency;
+        private readonly ExpenseCurrency _currency;
 
         private ExpenseAmount()
         {
         }
-        public ExpenseAmount(decimal amount, Currency currency)
+        public ExpenseAmount(decimal amount, ExpenseCurrency currency)
         {
             _amount = amount;
             _currency = currency;
         }
 
         public decimal Amount => _amount;
-        public Currency Currency => _currency;
+        public ExpenseCurrency Currency => _currency;
 
         public bool Equals(ExpenseAmount other)
         {

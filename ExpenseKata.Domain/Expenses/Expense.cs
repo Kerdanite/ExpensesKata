@@ -21,14 +21,14 @@ namespace ExpenseKata.Domain.Expenses
             _comment = comment;
         }
 
-        public static Expense Create(IDateTimeProvider dateTimeProvider, string comment, DateTime expenseDate, ExpenseUser user, Currency currency, decimal amount, ExpenseNature nature)
+        public static Expense Create(IDateTimeProvider dateTimeProvider, string comment, DateTime expenseDate, ExpenseUser user, string currency, decimal amount, ExpenseNature nature)
         {
             CheckRule(new ExpenseShouldHaveCommentRule(comment));
             CheckRule(new ExpenseCannotBeInFutureRule(dateTimeProvider, expenseDate));
             CheckRule(new ExpenseCannotBeOlderThanThreeMonthRule(dateTimeProvider, expenseDate));
-            CheckRule(new ExpenseShouldHaveSameCurrencyThanUserRule(user, currency));
-
-            ExpenseAmount expenseAmount = new ExpenseAmount(amount, currency);
+            var expenseCurrency = new ExpenseCurrency(currency);
+            CheckRule(new ExpenseShouldHaveSameCurrencyThanUserRule(user, expenseCurrency.Currency));
+            ExpenseAmount expenseAmount = new ExpenseAmount(amount, expenseCurrency);
             CheckRule(new ExpenseShouldBeUniqueOnDateAndAmountPerUserRule(user, expenseDate, expenseAmount));
 
             return new Expense(expenseAmount, expenseDate, user.Id, nature, comment);
@@ -39,7 +39,7 @@ namespace ExpenseKata.Domain.Expenses
             return new ExpenseMemento
             {
                 Id = this.Id,
-                Currency = _expenseAmount.Currency,
+                Currency = _expenseAmount.Currency.Currency,
                 UserId = _userId,
                 ExpenseDate = _expenseDate,
                 Comment = _comment,
@@ -50,7 +50,7 @@ namespace ExpenseKata.Domain.Expenses
 
         public static Expense FromMemento(ExpenseMemento memento)
         {
-            return new Expense(new ExpenseAmount(memento.Amount, memento.Currency), memento.ExpenseDate, memento.UserId, memento.Nature, memento.Comment);
+            return new Expense(new ExpenseAmount(memento.Amount, new ExpenseCurrency(memento.Currency)), memento.ExpenseDate, memento.UserId, memento.Nature, memento.Comment);
         }
 
         public bool Equals(Expense other)

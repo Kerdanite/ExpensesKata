@@ -91,7 +91,7 @@ namespace ExpenseKata.DomainTests
             decimal amount = 30;
             builder.WithUser(new ExpenseUser(Guid.NewGuid(), Currency.Dollar, new List<UserExpenseHistory>
             {
-                new UserExpenseHistory(expenseDate, new ExpenseAmount(amount, Currency.Dollar))
+                new UserExpenseHistory(expenseDate, amount)
             }));
             builder.WithExpenseDate(expenseDate);
             builder.WithAmount(amount);
@@ -193,7 +193,7 @@ namespace ExpenseKata.DomainTests
 
         public Expense Build()
         {
-            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency, _amount, _nature);
+            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency.ToString(), _amount, _nature);
         }
 
         public void WithComment(string comment)

@@ -31,7 +31,7 @@ namespace ExpenseKata.Infrastructure.Expenses
         {
             return await _context.Expenses
                 .Where(w => w.UserId == requestUserId)
-                .Select(se => new UserExpenseHistory(se.ExpenseDate, new ExpenseAmount(se.Amount, se.Currency)))
+                .Select(se => new UserExpenseHistory(se.ExpenseDate, se.Amount))
                 .ToListAsync();
 
         }

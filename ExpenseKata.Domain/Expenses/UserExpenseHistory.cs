@@ -5,19 +5,19 @@ namespace ExpenseKata.Domain.Expenses
     public class UserExpenseHistory
     {
         private readonly DateTime _expenseDate;
-        private readonly ExpenseAmount _amount;
+        private readonly decimal _amount;
 
         private UserExpenseHistory()
         {
         }
 
-        public UserExpenseHistory(DateTime expenseDate, ExpenseAmount amount)
+        public UserExpenseHistory(DateTime expenseDate, decimal amount)
         {
             _expenseDate = expenseDate;
             _amount = amount;
         }
 
-        public ExpenseAmount Amount => _amount;
+        public decimal Amount => _amount;
         public DateTime ExpenseDate => _expenseDate;
     }
 }

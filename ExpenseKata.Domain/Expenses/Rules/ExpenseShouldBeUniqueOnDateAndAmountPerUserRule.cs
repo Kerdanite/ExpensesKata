@@ -20,7 +20,7 @@ namespace ExpenseKata.Domain.Expenses.Rules
 
         public bool IsBroken()
         {
-            return _user.Histories.Any(o => o.ExpenseDate == _expenseDate && o.Amount.Equals(_amount));
+            return _user.Histories.Any(o => o.ExpenseDate == _expenseDate && o.Amount.Equals(_amount.Amount));
         }
 
         private bool IsExpenseInFuture(DateTime date1, DateTime date2)

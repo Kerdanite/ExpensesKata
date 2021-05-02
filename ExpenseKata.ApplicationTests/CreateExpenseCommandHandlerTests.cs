@@ -7,7 +7,6 @@ using ExpenseKata.Application.Expenses.Command.CreateExpense;
 using ExpenseKata.Domain.Common;
 using ExpenseKata.Domain.Expenses;
 using ExpenseKata.Domain.Users;
-using ExpenseKata.Infrastructure.Expenses;
 using ExpenseKata.Infrastructure.Interfaces;
 using NSubstitute;
 using Xunit;
