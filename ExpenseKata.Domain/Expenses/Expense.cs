@@ -21,7 +21,7 @@ namespace ExpenseKata.Domain.Expenses
             _comment = comment;
         }
 
-        public static Expense Create(IDateTimeProvider dateTimeProvider, string comment, DateTime expenseDate, ExpenseUser user, string currency, decimal amount, ExpenseNature nature)
+        public static Expense Create(IDateTimeProvider dateTimeProvider, string comment, DateTime expenseDate, ExpenseUser user, string currency, decimal amount, string nature)
         {
             CheckRule(new ExpenseShouldHaveCommentRule(comment));
             CheckRule(new ExpenseCannotBeInFutureRule(dateTimeProvider, expenseDate));
@@ -30,8 +30,8 @@ namespace ExpenseKata.Domain.Expenses
             CheckRule(new ExpenseShouldHaveSameCurrencyThanUserRule(user, expenseCurrency.Currency));
             ExpenseAmount expenseAmount = new ExpenseAmount(amount, expenseCurrency);
             CheckRule(new ExpenseShouldBeUniqueOnDateAndAmountPerUserRule(user, expenseDate, expenseAmount));
-
-            return new Expense(expenseAmount, expenseDate, user.Id, nature, comment);
+            ExpenseNature expenseNature = new ExpenseNature(nature);
+            return new Expense(expenseAmount, expenseDate, user.Id, expenseNature, comment);
         }
 
         public ExpenseMemento ToMemento()
@@ -44,13 +44,13 @@ namespace ExpenseKata.Domain.Expenses
                 ExpenseDate = _expenseDate,
                 Comment = _comment,
                 Amount = _expenseAmount.Amount,
-                Nature = _nature
+                Nature = _nature.ExpenseNatureType
             };
         }
 
         public static Expense FromMemento(ExpenseMemento memento)
         {
-            return new Expense(new ExpenseAmount(memento.Amount, new ExpenseCurrency(memento.Currency)), memento.ExpenseDate, memento.UserId, memento.Nature, memento.Comment);
+            return new Expense(new ExpenseAmount(memento.Amount, ExpenseCurrency.FromMemento(memento.Currency)), memento.ExpenseDate, memento.UserId, ExpenseNature.FromMemento(memento.Nature), memento.Comment);
         }
 
         public bool Equals(Expense other)
@@ -75,7 +75,7 @@ namespace ExpenseKata.Domain.Expenses
                 var hashCode = (_expenseAmount != null ? _expenseAmount.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ _expenseDate.GetHashCode();
                 hashCode = (hashCode * 397) ^ _userId.GetHashCode();
-                hashCode = (hashCode * 397) ^ (int) _nature;
+                hashCode = (hashCode * 397) ^ _nature.GetHashCode();
                 hashCode = (hashCode * 397) ^ (_comment != null ? _comment.GetHashCode() : 0);
                 return hashCode;
             }
@@ -99,7 +99,7 @@ namespace ExpenseKata.Domain.Expenses
         public Currency Currency { get;set; }
         public DateTime ExpenseDate { get; set; }
         public Guid UserId { get; set; }
-        public ExpenseNature Nature { get; set; }
+        public ExpenseNatureType Nature { get; set; }
         public string Comment { get; set; }
     }
 }

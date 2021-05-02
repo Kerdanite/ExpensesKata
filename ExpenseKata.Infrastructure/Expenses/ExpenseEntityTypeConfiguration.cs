@@ -19,8 +19,8 @@ namespace ExpenseKata.Infrastructure.Expenses
             builder.Property<string>(p => p.Comment).HasColumnName("Comment");
             builder.Property<Currency>(p => p.Currency).HasColumnName("Currency")
                 .HasConversion(v => v.ToString(), v => (Currency) Enum.Parse(typeof(Currency), v));
-            builder.Property<ExpenseNature>(p => p.Nature).HasColumnName("ExpenseNature")
-                .HasConversion(v => v.ToString(), v => (ExpenseNature) Enum.Parse(typeof(ExpenseNature), v));
+            builder.Property<ExpenseNatureType>(p => p.Nature).HasColumnName("ExpenseNature")
+                .HasConversion(v => v.ToString(), v => (ExpenseNatureType) Enum.Parse(typeof(ExpenseNatureType), v));
             builder.Property<Guid>(p => p.UserId).HasColumnName("UserId");
         }
     }

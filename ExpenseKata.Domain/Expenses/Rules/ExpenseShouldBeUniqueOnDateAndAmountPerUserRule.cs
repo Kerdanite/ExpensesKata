@@ -23,11 +23,6 @@ namespace ExpenseKata.Domain.Expenses.Rules
             return _user.Histories.Any(o => o.ExpenseDate == _expenseDate && o.Amount.Equals(_amount.Amount));
         }
 
-        private bool IsExpenseInFuture(DateTime date1, DateTime date2)
-        {
-            return date1 < date2;
-        }
-
         public string Message => ExpenseValidationConstants.ExpenseShouldBeUniqueOnDateAndAmountPerUser;
     }
 }

@@ -50,7 +50,7 @@ namespace ExpenseKata.Application.Expenses.Command.CreateExpense
                         new ExpenseUser(user.Id, user.Currency, history), 
                         request.Currency, 
                         request.Amount,
-                        ExpenseNature.Hotel);
+                        request.ExpenseNature);
 
             await _expenseRepository.AddAsync(expense);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

@@ -28,6 +28,7 @@ namespace ExpenseKata.Application.Expenses.Query
         {
             var query = _applicationDbContext.Expenses
                 .Join(_applicationDbContext.Users, expense => expense.UserId, user => user.Id, (expense, user) => new {expense, user})
+                .Where(w => w.expense.UserId == request.UserId)
                 .Select(se => new ExpenseDto
                 {
                     Amount = se.expense.Amount,

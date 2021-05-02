@@ -13,9 +13,14 @@ namespace ExpenseKata.Domain.Expenses
             _currency = Enum.Parse<Currency>(currency);
         }
 
-        internal ExpenseCurrency(Currency mementoCurrency)
+        private ExpenseCurrency(Currency mementoCurrency)
         {
             _currency = mementoCurrency;
+        }
+
+        internal static ExpenseCurrency FromMemento(Currency mementoCurrency)
+        {
+            return new ExpenseCurrency(mementoCurrency);
         }
 
         public Currency Currency => _currency;

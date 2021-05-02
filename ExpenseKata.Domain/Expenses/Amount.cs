@@ -7,10 +7,7 @@ namespace ExpenseKata.Domain.Expenses
         private readonly decimal _amount;
         private readonly ExpenseCurrency _currency;
 
-        private ExpenseAmount()
-        {
-        }
-        public ExpenseAmount(decimal amount, ExpenseCurrency currency)
+        internal ExpenseAmount(decimal amount, ExpenseCurrency currency)
         {
             _amount = amount;
             _currency = currency;

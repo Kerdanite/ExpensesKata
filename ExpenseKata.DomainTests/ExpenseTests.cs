@@ -119,7 +119,7 @@ namespace ExpenseKata.DomainTests
             var currency = Currency.Dollar;
             var builder = new EpenseBuilder();
             var userId = Guid.NewGuid();
-            var nature = ExpenseNature.Restaurant;
+            var nature = ExpenseNatureType.Restaurant;
 
             builder.WithExpenseDate(expenseDate);
             builder.WithAmount(amount);
@@ -173,7 +173,7 @@ namespace ExpenseKata.DomainTests
         private ExpenseUser _user;
         private Currency _currency;
         private decimal _amount;
-        private ExpenseNature _nature;
+        private ExpenseNatureType _nature;
 
         public EpenseBuilder()
         {
@@ -188,12 +188,12 @@ namespace ExpenseKata.DomainTests
             _currency = Currency.Dollar;
             _user = new ExpenseUser(Guid.NewGuid(), Currency.Dollar, new List<UserExpenseHistory>());
             _amount = 15;
-            _nature = ExpenseNature.Hotel;
+            _nature = ExpenseNatureType.Hotel;
         }
 
         public Expense Build()
         {
-            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency.ToString(), _amount, _nature);
+            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency.ToString(), _amount, _nature.ToString());
         }
 
         public void WithComment(string comment)
@@ -226,7 +226,7 @@ namespace ExpenseKata.DomainTests
             _amount = amount;
         }
 
-        public void WithNature(ExpenseNature nature)
+        public void WithNature(ExpenseNatureType nature)
         {
             _nature = nature;
         }

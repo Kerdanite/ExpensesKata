@@ -13,5 +13,7 @@
         public const string ExpenseShouldBeUniqueOnDateAndAmountPerUser = "Un utilisateur ne peut pas déclarer deux fois la même dépense (même date et même montant)";
 
         public const string CurrencyValueExist = "La devise {0} est inconnue";
+
+        public const string ExpenseNatureExist = "La nature {0} est inconnue";
     }
 }
