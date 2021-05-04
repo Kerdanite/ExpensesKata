@@ -21,6 +21,7 @@ namespace ExpenseKata.Api.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
         public async Task<ActionResult> CreateExpense(CreateExpenseCommand command)
         {
             await _mediator.Send(command);
@@ -29,7 +30,7 @@ namespace ExpenseKata.Api.Controllers
         }
 
         [HttpGet("expenseForUser/{userId}")]
-        [ProducesResponseType(typeof(ExpenseDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<ExpenseDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(Guid userId)
         {
             return Ok(await _mediator.Send(new GetExpensePerUserQuery{ UserId = userId}));

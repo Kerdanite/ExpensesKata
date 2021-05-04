@@ -36,18 +36,9 @@ namespace ExpenseKata.Domain.Expenses
 
         public ExpenseMemento ToMemento()
         {
-            return new ExpenseMemento
-            {
-                Id = this.Id,
-                Currency = _expenseAmount.Currency.Currency,
-                UserId = _userId,
-                ExpenseDate = _expenseDate,
-                Comment = _comment,
-                Amount = _expenseAmount.Amount,
-                Nature = _nature.ExpenseNatureType
-            };
+            return new ExpenseMemento(this.Id, _expenseAmount.Amount, _expenseAmount.Currency.Currency, _expenseDate,  _userId ,_nature.ExpenseNatureType , _comment);
         }
-
+        
         public static Expense FromMemento(ExpenseMemento memento)
         {
             return new Expense(new ExpenseAmount(memento.Amount, ExpenseCurrency.FromMemento(memento.Currency)), memento.ExpenseDate, memento.UserId, ExpenseNature.FromMemento(memento.Nature), memento.Comment);
@@ -94,12 +85,22 @@ namespace ExpenseKata.Domain.Expenses
 
     public class ExpenseMemento
     {
-        public Guid Id { get; set; }
-        public decimal Amount { get; set; }
-        public Currency Currency { get;set; }
-        public DateTime ExpenseDate { get; set; }
-        public Guid UserId { get; set; }
-        public ExpenseNatureType Nature { get; set; }
-        public string Comment { get; set; }
+        internal ExpenseMemento(Guid id, decimal amount, Currency currency, DateTime expenseDate, Guid userId, ExpenseNatureType nature, string comment)
+        {
+            Id = id;
+            Amount = amount;
+            Currency = currency;
+            ExpenseDate = expenseDate;
+            UserId = userId;
+            Nature = nature;
+            Comment = comment;
+        }
+        public Guid Id { get; private set; }
+        public decimal Amount { get; private set; }
+        public Currency Currency { get; private set; }
+        public DateTime ExpenseDate { get; private set; }
+        public Guid UserId { get; private set; }
+        public ExpenseNatureType Nature { get; private set; }
+        public string Comment { get; private set; }
     }
 }
