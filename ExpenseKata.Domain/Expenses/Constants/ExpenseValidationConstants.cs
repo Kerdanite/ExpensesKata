@@ -15,5 +15,7 @@
         public const string CurrencyValueExist = "La devise {0} est inconnue";
 
         public const string ExpenseNatureExist = "La nature {0} est inconnue";
+
+        public const string ExpenseAmountShouldBeMoreThanZero = "Le montant d'une dépense doit être supérieur à 0";
     }
 }

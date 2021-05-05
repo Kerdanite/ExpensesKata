@@ -175,6 +175,18 @@ namespace ExpenseKata.DomainTests
             string expectedExceptionMessage = string.Format(ExpenseValidationConstants.ExpenseNatureExist, nature);
             Assert.Equal(expectedExceptionMessage, exception.Message);
         }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        public void CreateExpense_VerifyExpenseAmount_AmountNotStrictlyPositive_ThrowException(decimal testedAmount)
+        {
+            var builder = new EpenseBuilder();
+            builder.WithAmount(testedAmount);
+            var exception = Assert.Throws<BusinessRuleValidationException>(() => builder.Build());
+
+            Assert.Equal(ExpenseValidationConstants.ExpenseAmountShouldBeMoreThanZero, exception.Message);
+        }
     }
 
     public class DateTimeProviderStub : IDateTimeProvider

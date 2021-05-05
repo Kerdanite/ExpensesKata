@@ -31,6 +31,7 @@ namespace ExpenseKata.Domain.Expenses
             ExpenseAmount expenseAmount = new ExpenseAmount(amount, expenseCurrency);
             CheckRule(new ExpenseShouldBeUniqueOnDateAndAmountPerUserRule(user, expenseDate, expenseAmount));
             ExpenseNature expenseNature = new ExpenseNature(nature);
+            CheckRule(new ExpenseShoudHaveStrictlyPositiveAmountRule(amount));
             return new Expense(expenseAmount, expenseDate, user.Id, expenseNature, comment);
         }
 
