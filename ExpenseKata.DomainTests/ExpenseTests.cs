@@ -163,6 +163,18 @@ namespace ExpenseKata.DomainTests
             string expectedExceptionMessage = string.Format(ExpenseValidationConstants.CurrencyValueExist, currency);
             Assert.Equal(expectedExceptionMessage, exception.Message);
         }
+
+        [Fact]
+        public void CreateExpense_InexistingNature_ThrowException()
+        {
+            string nature = "Inexisting nature";
+            var builder = new EpenseBuilder();
+            builder.WithNature(nature);
+            var exception = Assert.Throws<BusinessRuleValidationException>(() => builder.Build());
+
+            string expectedExceptionMessage = string.Format(ExpenseValidationConstants.ExpenseNatureExist, nature);
+            Assert.Equal(expectedExceptionMessage, exception.Message);
+        }
     }
 
     public class DateTimeProviderStub : IDateTimeProvider
@@ -185,7 +197,7 @@ namespace ExpenseKata.DomainTests
         private ExpenseUser _user;
         private string _currency;
         private decimal _amount;
-        private ExpenseNatureType _nature;
+        private string _nature;
 
         public EpenseBuilder()
         {
@@ -200,12 +212,12 @@ namespace ExpenseKata.DomainTests
             _currency = Currency.Dollar.ToString();
             _user = new ExpenseUser(Guid.NewGuid(), Currency.Dollar, new List<UserExpenseHistory>());
             _amount = 15;
-            _nature = ExpenseNatureType.Hotel;
+            _nature = ExpenseNatureType.Hotel.ToString();
         }
 
         public Expense Build()
         {
-            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency, _amount, _nature.ToString());
+            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency, _amount, _nature);
         }
 
         public void WithComment(string comment)
@@ -244,6 +256,11 @@ namespace ExpenseKata.DomainTests
         }
 
         public void WithNature(ExpenseNatureType nature)
+        {
+            _nature = nature.ToString();
+        }
+
+        public void WithNature(string nature)
         {
             _nature = nature;
         }
