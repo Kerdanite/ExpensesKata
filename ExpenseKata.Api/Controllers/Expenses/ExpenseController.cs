@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using ExpenseKata.Application.Expenses.Command.CreateExpense;
 using ExpenseKata.Application.Expenses.Query;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
-namespace ExpenseKata.Api.Controllers
+namespace ExpenseKata.Api.Controllers.Expenses
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -29,11 +29,11 @@ namespace ExpenseKata.Api.Controllers
             return Accepted();
         }
 
-        [HttpGet("expenseForUser/{userId}")]
+        [HttpGet("expenses")]
         [ProducesResponseType(typeof(List<ExpenseDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get(Guid userId)
+        public async Task<IActionResult> Get([FromQuery]ExpenseListQuery query)
         {
-            return Ok(await _mediator.Send(new GetExpensePerUserQuery{ UserId = userId}));
+            return Ok(await _mediator.Send(new GetExpensesWithFilterQuery { UserId = query.UserId, OrderBy = query.OrderBy}));
         }
     }
 }
