@@ -39,22 +39,22 @@ namespace ExpenseKata.Application.Expenses.Command.CreateExpense
             _expenseRepository = expenseRepository;
             _userRepository = userRepository;
         }
-        public async Task<Unit> Handle(CreateExpenseCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateExpenseCommand command, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdAsync(request.UserId);
+            var user = await _userRepository.GetByIdAsync(command.UserId);
             if(user == null)
             {
                 throw new ApplicationException($"L'utilisateur est inconnu");
             }
-            IEnumerable<UserExpenseHistory> history = await _expenseRepository.GetExpenseHistoryForUser(request.UserId);
+            IEnumerable<UserExpenseHistory> history = await _expenseRepository.GetExpenseHistoryForUser(command.UserId);
 
             var expense = Expense.Create(_dateProvider, 
-                        request.Comment, 
-                        request.ExpenseDate, 
+                        command.Comment, 
+                        command.ExpenseDate, 
                         new ExpenseUser(user.Id, user.Currency, history), 
-                        request.Currency, 
-                        request.Amount,
-                        request.ExpenseNature);
+                        command.Currency, 
+                        command.Amount,
+                        command.ExpenseNature);
 
             await _expenseRepository.AddAsync(expense);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

@@ -151,6 +151,18 @@ namespace ExpenseKata.DomainTests
 
             Assert.Equal(expense, fromMemento);
         }
+
+        [Fact]
+        public void CreateExpense_InexistingCurrency_ThrowException()
+        {
+            string currency = "Inexisting currency";
+            var builder = new EpenseBuilder();
+            builder.WithCurrency(currency);
+            var exception = Assert.Throws<BusinessRuleValidationException>(() => builder.Build());
+
+            string expectedExceptionMessage = string.Format(ExpenseValidationConstants.CurrencyValueExist, currency);
+            Assert.Equal(expectedExceptionMessage, exception.Message);
+        }
     }
 
     public class DateTimeProviderStub : IDateTimeProvider
@@ -171,7 +183,7 @@ namespace ExpenseKata.DomainTests
         private IDateTimeProvider _dateTimeProvider;
         private DateTime _expenseDate;
         private ExpenseUser _user;
-        private Currency _currency;
+        private string _currency;
         private decimal _amount;
         private ExpenseNatureType _nature;
 
@@ -185,7 +197,7 @@ namespace ExpenseKata.DomainTests
             _comment = "default";
             _dateTimeProvider = new DateTimeProviderStub(new DateTime(2021, 5, 1));
             _expenseDate = new DateTime(2021, 4, 1);
-            _currency = Currency.Dollar;
+            _currency = Currency.Dollar.ToString();
             _user = new ExpenseUser(Guid.NewGuid(), Currency.Dollar, new List<UserExpenseHistory>());
             _amount = 15;
             _nature = ExpenseNatureType.Hotel;
@@ -193,7 +205,7 @@ namespace ExpenseKata.DomainTests
 
         public Expense Build()
         {
-            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency.ToString(), _amount, _nature.ToString());
+            return Expense.Create(_dateTimeProvider, _comment, _expenseDate, _user, _currency, _amount, _nature.ToString());
         }
 
         public void WithComment(string comment)
@@ -212,6 +224,11 @@ namespace ExpenseKata.DomainTests
         }
 
         public void WithCurrency(Currency currency)
+        {
+            _currency = currency.ToString();
+        }
+
+        public void WithCurrency(string currency)
         {
             _currency = currency;
         }
